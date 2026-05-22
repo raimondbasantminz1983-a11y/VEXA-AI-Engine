@@ -1,320 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VEXA AI Engine</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
-    }
+<title>VEXA AI Engine</title>
 
-    body{
-      background:#f4f4f4;
-      color:#111;
-      padding:20px;
-    }
+<style>
 
-    .container{
-      max-width:1200px;
-      margin:auto;
-    }
+:root{
+ --bg:#050505;
+ --card:#111;
+ --gold:#d4af37;
+ --text:#fff;
+}
 
-    .header{
-      background:white;
-      padding:25px;
-      border-radius:20px;
-      margin-bottom:20px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    }
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial,sans-serif;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ min-height:100vh;
+ padding:20px;
+}
 
-    .header h1{
-      font-size:40px;
-      margin-bottom:10px;
-    }
+.panel{
+ width:360px;
+ background:var(--card);
+ border:2px solid var(--gold);
+ border-radius:25px;
+ padding:20px;
+ box-shadow:0 0 25px rgba(212,175,55,.4);
+}
 
-    .header p{
-      color:#666;
-      font-size:18px;
-    }
+h1{
+ text-align:center;
+ color:var(--gold);
+ margin-top:0;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:20px;
-    }
+select,input,button{
+ width:100%;
+ padding:12px;
+ margin-top:12px;
+ border:none;
+ border-radius:12px;
+ box-sizing:border-box;
+ font-size:16px;
+}
 
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:20px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.08);
-    }
+select,input{
+ background:#000;
+ color:#fff;
+ border:1px solid #333;
+}
 
-    .card h2{
-      margin-bottom:20px;
-      font-size:28px;
-    }
+button{
+ background:var(--gold);
+ color:#000;
+ font-weight:bold;
+ cursor:pointer;
+}
 
-    .month-item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px;
-      border:1px solid #ddd;
-      border-radius:15px;
-      margin-bottom:10px;
-    }
+.labelBox{
+ margin-top:25px;
+ background:#fff;
+ color:#000;
+ border-radius:20px;
+ padding:25px;
+ text-align:center;
+}
 
-    .month-code{
-      font-size:28px;
-    }
+/* ========================= COMPACT LABEL ========================= */
 
-    .stock-item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px;
-      border:1px solid #ddd;
-      border-radius:15px;
-      margin-bottom:15px;
-    }
+.topColors{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:0;
+}
 
-    .stock-code{
-      font-size:38px;
-      font-weight:bold;
-    }
+.dot{
+ width:52px;
+ height:52px;
+ border-radius:50%;
+}
 
-    .days{
-      font-size:22px;
-      font-weight:bold;
-      text-align:right;
-    }
+.weekNum{
+ font-size:56px;
+ font-weight:bold;
+ line-height:1;
+ margin:0;
+ padding:0;
+}
 
-    .status{
-      font-size:14px;
-      margin-top:5px;
-      color:#666;
-    }
+.days{
+ font-size:42px;
+ font-weight:bold;
+ margin-top:8px;
+ line-height:1;
+}
 
-    .workflow{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-      gap:15px;
-      margin-top:15px;
-    }
+.info{
+ margin-top:10px;
+ font-size:18px;
+ font-weight:bold;
+}
 
-    .workflow-box{
-      border:1px solid #ddd;
-      border-radius:20px;
-      padding:20px;
-      text-align:center;
-    }
+.month{
+ margin-top:8px;
+ font-size:18px;
+ color:#444;
+}
 
-    .workflow-box span{
-      font-size:40px;
-      display:block;
-      margin-bottom:10px;
-    }
+.result{
+ margin-top:20px;
+ background:#000;
+ border-radius:20px;
+ padding:20px;
+ text-align:center;
+}
 
-    .label-box{
-      margin-top:20px;
-      text-align:center;
-    }
-
-    .label{
-      display:inline-block;
-      background:white;
-      border:4px solid black;
-      border-radius:25px;
-      padding:25px 50px;
-      font-size:70px;
-      font-weight:bold;
-    }
-
-    .small{
-      color:#666;
-      margin-top:10px;
-    }
-
-    @media(max-width:600px){
-      .header h1{
-        font-size:28px;
-      }
-
-      .label{
-        font-size:50px;
-        padding:20px 30px;
-      }
-
-      .stock-code{
-        font-size:28px;
-      }
-    }
-
-  </style>
+</style>
 </head>
+
 <body>
 
-  <div class="container">
+<div class="panel">
 
-    <div class="header">
-      <h1>VEXA AI Engine</h1>
-      <p>
-        Visual Coding & AI Expiry Intelligence System
-      </p>
-    </div>
+<h1>VEXA AI Engine</h1>
 
-    <div class="grid">
+<select id="lang"
+onchange="updateLabel()">
 
-      <div class="card">
-        <h2>Month Color Codes</h2>
+<option value="en">English</option>
+<option value="hi">हिन्दी</option>
+<option value="bn">বাংলা</option>
+<option value="ur">اردو</option>
+<option value="ar">العربية</option>
+<option value="fr">Français</option>
 
-        <div id="months"></div>
-      </div>
+</select>
 
-      <div class="card">
-        <h2>AI Expiry Priority</h2>
+<select id="month"
+onchange="updateLabel()">
 
-        <div id="stocks"></div>
-      </div>
+<option value="jan">January</option>
+<option value="feb">February</option>
+<option value="mar">March</option>
+<option value="apr">April</option>
+<option value="may">May</option>
+<option value="jun">June</option>
+<option value="jul">July</option>
+<option value="aug">August</option>
+<option value="sep">September</option>
+<option value="oct">October</option>
+<option value="nov">November</option>
+<option value="dec">December</option>
 
-    </div>
+</select>
 
-    <div class="card" style="margin-top:20px;">
-      <h2>Workflow</h2>
+<select id="week"
+onchange="updateLabel()">
 
-      <div class="workflow">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3" selected>3</option>
+<option value="4">4</option>
+<option value="5">5</option>
 
-        <div class="workflow-box">
-          <span>👀</span>
-          देखो
-        </div>
+</select>
 
-        <div class="workflow-box">
-          <span>🎨</span>
-          रंग पहचानो
-        </div>
+<input type="number"
+id="daysInput"
+value="18"
+placeholder="Remaining Days"
+oninput="updateLabel()">
 
-        <div class="workflow-box">
-          <span>🤖</span>
-          AI कैलकुलेट करेगा
-        </div>
+<button onclick="generateLabel()">
+Generate Label
+</button>
 
-        <div class="workflow-box">
-          <span>📦</span>
-          पहले Expiry हटाओ
-        </div>
+<!-- ========================= LIVE LABEL ========================= -->
 
-      </div>
-    </div>
+<div class="labelBox">
 
-    <div class="card label-box">
-      <h2>Example Label</h2>
+<div class="topColors">
 
-      <div class="label">
-        ⚫3🔵
-      </div>
+<div class="dot" id="leftDot"></div>
 
-      <div class="small">
-        जनवरी • Week 3
-      </div>
-    </div>
+<div class="weekNum"
+id="weekCode">३</div>
 
-  </div>
+<div class="dot" id="rightDot"></div>
 
-  <script>
+</div>
 
-    const months = [
-      {month:"जनवरी", code:"⚫🔵"},
-      {month:"फरवरी", code:"🟢🔴"},
-      {month:"मार्च", code:"🔵🔴"},
-      {month:"अप्रैल", code:"🔴🟡"},
-      {month:"मई", code:"🔴🔴"},
-      {month:"जून", code:"🟡🟡"},
-      {month:"जुलाई", code:"🔵🟡"},
-      {month:"अगस्त", code:"🔵🔵"},
-      {month:"सितंबर", code:"🟢⚫"},
-      {month:"अक्टूबर", code:"🟡🟢"},
-      {month:"नवंबर", code:"🔵🟢"},
-      {month:"दिसंबर", code:"🟢🟢"}
-    ];
+<div class="days"
+id="dayCode">
+१८
+</div>
 
-    const stocks = [
-      {
-        code:"🔴1🔴",
-        month:"मई",
-        week:"Week 1",
-        days:2,
-        status:"URGENT REMOVE"
-      },
+<div class="info"
+id="weekText">
+सप्ताह
+</div>
 
-      {
-        code:"⚫3🔵",
-        month:"जनवरी",
-        week:"Week 3",
-        days:5,
-        status:"WARNING"
-      },
+<div class="month"
+id="monthText">
+मार्च
+</div>
 
-      {
-        code:"🟡5🟢",
-        month:"अक्टूबर",
-        week:"Week 5",
-        days:18,
-        status:"SAFE"
-      }
-    ];
+</div>
 
-    const monthBox = document.getElementById("months");
+<!-- ========================= FINAL RESULT ========================= -->
 
-    months.forEach(item => {
+<div class="result">
 
-      monthBox.innerHTML += `
-        <div class="month-item">
-          <div>${item.month}</div>
-          <div class="month-code">${item.code}</div>
-        </div>
-      `;
+<div class="topColors">
 
-    });
+<div class="dot" id="finalLeft"></div>
 
-    const stockBox = document.getElementById("stocks");
+<div class="weekNum"
+id="finalWeek">३</div>
 
-    stocks.sort((a,b)=>a.days-b.days);
+<div class="dot" id="finalRight"></div>
 
-    stocks.forEach(item => {
+</div>
 
-      stockBox.innerHTML += `
-        <div class="stock-item">
+<div class="days"
+id="finalDays">
+१८ दिन
+</div>
 
-          <div>
-            <div class="stock-code">
-              ${item.code}
-            </div>
+<div class="info"
+id="finalWeekText">
+सप्ताह
+</div>
 
-            <div class="small">
-              ${item.month} • ${item.week}
-            </div>
-          </div>
+<div class="month"
+id="finalMonth">
+मार्च
+</div>
 
-          <div class="days">
-            ${item.days} Days
-            <div class="status">
-              ${item.status}
-            </div>
-          </div>
+</div>
 
-        </div>
-      `;
+</div>
 
-    });
+<script>
 
-  </script>
+/* ========================= MONTH COLOR SYSTEM ========================= */
+
+const monthColors = {
+
+ jan:["#2c2c2c","#1e88e5"],
+ feb:["#7cb342","#ff3d3d"],
+ mar:["#1e88e5","#ff3d3d"],
+ apr:["#ff3d3d","#fdd835"],
+ may:["#ff3d3d","#ff1744"],
+ jun:["#fdd835","#ffd600"],
+ jul:["#1565c0","#fdd835"],
+ aug:["#1976d2","#1565c0"],
+ sep:["#7cb342","#2c2c2c"],
+ oct:["#fdd835","#7cb342"],
+ nov:["#1976d2","#43a047"],
+ dec:["#43a047","#7cb342"]
+
+};
+
+/* ========================= NUMBER LANGUAGE ========================= */
+
+const numberLang = {
+
+ en:{1:"1",2:"2",3:"3",4:"4",5:"5"},
+ hi:{1:"१",2:"२",3:"३",4:"४",5:"५"},
+ bn:{1:"১",2:"২",3:"৩",4:"৪",5:"৫"},
+ ur:{1:"۱",2:"۲",3:"۳",4:"۴",5:"۵"},
+ ar:{1:"١",2:"٢",3:"٣",4:"٤",5:"٥"},
+ fr:{1:"1",2:"2",3:"3",4:"4",5:"5"}
+
+};
+
+/* ========================= TEXT LANGUAGE ========================= */
+
+const textLang = {
+
+ en:{week:"Week",days:"Days"},
+ hi:{week:"सप्ताह",days:"दिन"},
+ bn:{week:"সপ্তাহ",days:"দিন"},
+ ur:{week:"ہفتہ",days:"دن"},
+ ar:{week:"أسبوع",days:"يوم"},
+ fr:{week:"Semaine",days:"Jours"}
+
+};
+
+/* ========================= MONTH NAMES ========================= */
+
+const monthNames = {
+
+ en:{
+  jan:"January",
+  feb:"February",
+  mar:"March",
+  apr:"April",
+  may:"May",
+  jun:"June",
+  jul:"July",
+  aug:"August",
+  sep:"September",
+  oct:"October",
+  nov:"November",
+  dec:"December"
+ },
+
+ hi:{
+  jan:"जनवरी",
+  feb:"फरवरी",
+  mar:"मार्च",
+  apr:"अप्रैल",
+  may:"मई",
+  jun:"जून",
+  jul:"जुलाई",
+  aug:"अगस्त",
+  sep:"सितम्बर",
+  oct:"अक्टूबर",
+  nov:"नवम्बर",
+  dec:"दिसम्बर"
+ },
+
+ bn:{
+  jan:"জানুয়ারি",
+  feb:"ফেব্রুয়ারি",
+  mar:"মার্চ",
+  apr:"এপ্রিল",
+  may:"মে",
+  jun:"জুন",
+  jul:"জুলাই",
+  aug:"আগস্ট",
+  sep:"সেপ্টেম্বর",
+  oct:"অক্টোবর",
+  nov:"নভেম্বর",
+  dec:"ডিসেম্বর"
+ },
+
+ ur:{
+  jan:"جنوری",
+  feb:"فروری",
+  mar:"مارچ",
+  apr:"اپریل",
+  may:"مئی",
+  jun:"جون",
+  jul:"جولائی",
+  aug:"اگست",
+  sep:"ستمبر",
+  oct:"اکتوبر",
+  nov:"نومبر",
+  dec:"دسمبر"
+ },
+
+ ar:{
+  jan:"يناير",
+  feb:"فبراير",
+  mar:"مارس",
+  apr:"أبريل",
+  may:"مايو",
+  jun:"يونيو",
+  jul:"يوليو",
+  aug:"أغسطس",
+  sep:"سبتمبر",
+  oct:"أكتوبر",
+  nov:"نوفمبر",
+  dec:"ديسمبر"
+ },
+
+ fr:{
+  jan:"Janvier",
+  feb:"Février",
+  mar:"Mars",
+  apr:"Avril",
+  may:"Mai",
+  jun:"Juin",
+  jul:"Juillet",
+  aug:"Août",
+  sep:"Septembre",
+  oct:"Octobre",
+  nov:"Novembre",
+  dec:"Décembre"
+ }
+
+};
+
+/* ========================= UPDATE LABEL ========================= */
+
+function updateLabel(){
+
+ let lang =
+ document.getElementById("lang").value;
+
+ let month =
+ document.getElementById("month").value;
+
+ let week =
+ document.getElementById("week").value;
+
+ let days =
+ document.getElementById("daysInput").value;
+
+ /* COLORS */
+
+ let left =
+ monthColors[month][0];
+
+ let right =
+ monthColors[month][1];
+
+ document.getElementById(
+ "leftDot"
+ ).style.background = left;
+
+ document.getElementById(
+ "rightDot"
+ ).style.background = right;
+
+ /* NUMBER */
+
+ let W =
+ numberLang[lang][week];
+
+ /* TEXT */
+
+ let weekText =
+ textLang[lang].week;
+
+ let dayText =
+ textLang[lang].days;
+
+ let monthText =
+ monthNames[lang][month];
+
+ /* OUTPUT */
+
+ document.getElementById(
+ "weekCode"
+ ).innerHTML = W;
+
+ document.getElementById(
+ "dayCode"
+ ).innerHTML =
+ days;
+
+ document.getElementById(
+ "weekText"
+ ).innerHTML =
+ weekText;
+
+ document.getElementById(
+ "monthText"
+ ).innerHTML =
+ monthText;
+
+}
+
+/* ========================= GENERATE FINAL ========================= */
+
+function generateLabel(){
+
+ let lang =
+ document.getElementById("lang").value;
+
+ let month =
+ document.getElementById("month").value;
+
+ let week =
+ document.getElementById("week").value;
+
+ let days =
+ document.getElementById("daysInput").value;
+
+ /* COLORS */
+
+ let left =
+ monthColors[month][0];
+
+ let right =
+ monthColors[month][1];
+
+ document.getElementById(
+ "finalLeft"
+ ).style.background = left;
+
+ document.getElementById(
+ "finalRight"
+ ).style.background = right;
+
+ /* NUMBER */
+
+ let W =
+ numberLang[lang][week];
+
+ /* TEXT */
+
+ let weekText =
+ textLang[lang].week;
+
+ let dayText =
+ textLang[lang].days;
+
+ let monthText =
+ monthNames[lang][month];
+
+ /* FINAL OUTPUT */
+
+ document.getElementById(
+ "finalWeek"
+ ).innerHTML = W;
+
+ document.getElementById(
+ "finalDays"
+ ).innerHTML =
+ days + " " + dayText;
+
+ document.getElementById(
+ "finalWeekText"
+ ).innerHTML =
+ weekText;
+
+ document.getElementById(
+ "finalMonth"
+ ).innerHTML =
+ monthText;
+
+}
+
+/* ========================= AUTO LOAD ========================= */
+
+updateLabel();
+generateLabel();
+
+</script>
 
 </body>
 </html>
